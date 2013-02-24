@@ -11,5 +11,7 @@ BOT_NAME = 'slando_apt_od'
 SPIDER_MODULES = ['slando_apt_od.spiders']
 NEWSPIDER_MODULE = 'slando_apt_od.spiders'
 
+ITEM_PIPELINES = ['slando_apt_od.pipelines.WriteDbPipeline']
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'slando_apt_od (+http://www.yourdomain.com)'
