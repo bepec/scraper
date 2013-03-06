@@ -5,7 +5,7 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from scrapy import log
 from slando_apt_od.items import SlandoAptOdItem
-import sqlite3
+from slando_apt_od.slando_db import OffersTable
 
 class SlandoSpider(CrawlSpider):
     name = "slando"
@@ -36,18 +36,14 @@ class SlandoSpider(CrawlSpider):
 	return item
 
     def links_not_in_db(self, links):
-	connection = sqlite3.connect('/tmp/slando.db')	
-	cursor = connection.cursor()
-	id_list = set()
-	filtered_links = list()
-	cursor.execute('select id from offers')
-	for row in cursor:
-	    id_list.add(row[0])
+        offersList = OffersTable().select_all()
+        idList = [ offer[0] for offer in offersList ]
+        filteredLinks = list()
 	for link in links:
 	    id = re.search(r'-ID(.{5})\.html', link.url).group(1)
-	    if not id in id_list: 
-		filtered_links.append(link)
+	    if not id in idList: 
+		filteredLinks.append(link)
 	    else:
 		log.msg("Item with ID={0} is already in db, skipping.".format(id))
-	return filtered_links
+	return filteredLinks
 

@@ -1,0 +1,6 @@
+source /usr/bin/virtualenvwrapper.sh
+workon scraper
+cd ~/devel/scraper/slando_apt_od/slando_apt_od/
+scrapy crawl slando -L INFO
+deactivate
+
