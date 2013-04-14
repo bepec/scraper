@@ -13,3 +13,14 @@ class SlandoAptOdItem(Item):
     price = Field()
     desc  = Field()
     addr  = Field()
+
+
+class EbayItem(Item):
+
+    id = Field()
+    title = Field()
+    link = Field()
+    price = Field()
+    shipping = Field()
+    time = Field()
+    image = Field()

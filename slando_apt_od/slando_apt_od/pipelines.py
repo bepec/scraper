@@ -8,6 +8,15 @@ from scrapy import log
 slando_db.log_handle = log
 
 
+class MailPipeline(object):
+
+    def __init__(self):
+        pass
+
+    def process_item(self):
+        pass
+
+
 class WriteDbPipeline(object):
 
     def __init__(self):
