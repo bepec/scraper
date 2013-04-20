@@ -8,7 +8,7 @@ password = 'Z$d86~#$br=T;[.Y4@{X'
 
 def SendMail(to, subject, text):
 
-    message = MIMEText(messageText, 'html')
+    message = MIMEText(text, 'html')
     message['Subject'] = subject
     message['From'] = addressFrom
     message['To'] = to
@@ -16,7 +16,7 @@ def SendMail(to, subject, text):
     server = smtplib.SMTP_SSL('smtp.gmail.com')
     server.ehlo()
     server.login(username, password)
-    server.sendmail(addressFrom, addressTo, message.as_string())
+    server.sendmail(addressFrom, to, message.as_string())
     server.quit()
 
 
