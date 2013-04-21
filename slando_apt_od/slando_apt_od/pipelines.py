@@ -15,15 +15,20 @@ class MailPipeline(object):
         pass
 
     def open_spider(self, spider):
-        self.message = "New items:\n\n"
-        self.subject = 'New items from {0}!'.format(spider.name)
+        self.message = "New items:<br><br>\n"
+        self.counter = 0
 
-    def process_item(self, spider, item):
-        text = "\n".join([':'.join(list(key, item[key])) for key in item.keys()])
-        self.message += text
+    def process_item(self, item, spider):
+        text = "<br>".join([': '.join([key, item.get(key, 'no data')]) for key in item.fields.keys()])
+        self.message += text + "<br><br>\n"
+        self.counter += 1
+        return item
 
     def close_spider(self, spider):
-        mail.SendMail('loafshock@gmail.com', self.subject, self.message)
+        if self.counter == 0:
+            return
+        subject = '{0} new items in {1}!'.format(self.counter, spider.name)
+        mail.SendMail('loafshock@gmail.com', subject, self.message)
 
 
 class WriteDbPipeline(object):
